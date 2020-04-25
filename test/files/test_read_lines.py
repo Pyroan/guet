@@ -23,7 +23,14 @@ class TestReadLines(unittest.TestCase):
         path: Path = Mock()
         path.read_text.return_value = 'Line1\nLine2\n'
         result = read_lines(path)
-        self.assertEqual(['Line1', 'Line2', ''], result)
+        self.assertEqual(['Line1', 'Line2'], result)
+
+    @patch('guet.files.read_lines.Path')
+    def test_removes_last_empty_line(self, mock_Path):
+        path: Path = Mock()
+        path.read_text.return_value = 'Line1\nLine2\n'
+        result = read_lines(path)
+        self.assertEqual(['Line1', 'Line2'], result)
 
     @patch('guet.files.read_lines.Path')
     def test_if_given_str_path_convert_to_Path(self, mock_Path):

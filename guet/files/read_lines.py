@@ -10,4 +10,7 @@ def read_lines(path: Union[Path, str]) -> List[str]:
 
 
 def _read_lines_from_path(path: Path) -> List[str]:
-    return path.read_text().split('\n')
+    all_lines = path.read_text().split('\n')
+    if all_lines[len(all_lines) - 1] == '':
+        del all_lines[len(all_lines) - 1]
+    return all_lines

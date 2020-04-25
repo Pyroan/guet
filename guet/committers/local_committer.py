@@ -1,4 +1,5 @@
 from os.path import join
+from pathlib import Path
 
 from guet import constants
 from guet.committers._add_committer import add_committer
@@ -11,5 +12,5 @@ class LocalCommitter(Committer):
         self._project_root = project_root
 
     def save(self):
-        path = join(self._project_root, '.guet', constants.COMMITTERS)
+        path = Path(join(self._project_root, '.guet', constants.COMMITTERS))
         add_committer(self.initials, self.name, self.email, file_path=path)
