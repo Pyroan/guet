@@ -1,41 +1,37 @@
 import unittest
-from unittest.mock import patch, mock_open
+from pathlib import Path
+from unittest.mock import patch, mock_open, Mock
 
 from guet.files.write_lines import write_lines
 
 
 class TestWriteLines(unittest.TestCase):
 
-    @patch('builtins.open', new_callable=mock_open())
-    def test_opens_file_in_overwrite_mode(self, mock_open):
-        write_lines('path/to/file', [])
-        mock_open.assert_called_with('path/to/file', 'w')
-
-    @patch('builtins.open', new_callable=mock_open())
-    def test_writes_lines_to_file(self, mock_open):
-        expected = [
+    def test_writes_lines_to_file(self):
+        path: Path = Mock()
+        write_lines(path, [
             'Line1\n',
             'Line2\n'
-        ]
-        mock_open.return_value.readlines.return_value = expected
-        write_lines('path/to/file', expected)
-        mock_open.return_value.writelines.assert_called_with(expected)
+        ])
+        path.write_text.assert_called_with('Line1\nLine2\n')
 
-    @patch('builtins.open', new_callable=mock_open())
-    def test_closes_file(self, mock_open):
-        write_lines('path/to/file', [])
-        mock_open.return_value.close.assert_called()
-
-    @patch('builtins.open', new_callable=mock_open())
-    def test_appends_newline_to_files_if_one_is_not_present(self, mock_open):
+    def test_appends_newline_to_files_if_one_is_not_present(self):
+        path: Path = Mock()
         given = [
             'Line1',
             'Line2\n'
         ]
-        expected = [
-            'Line1\n',
+        write_lines(path, given)
+        path.write_text.assert_called_with('Line1\nLine2\n')
+
+    @patch('guet.files.write_lines.Path')
+    def test_if_given_str_path_convert_to_Path(self, mock_Path):
+        mock_path = mock_Path.return_value
+        given = [
+            'Line1',
             'Line2\n'
         ]
-        mock_open.return_value.readlines.return_value = given
-        write_lines('path/to/file', given)
-        mock_open.return_value.writelines.assert_called_with(expected)
+        path = '/path/to/file'
+        write_lines(path, given)
+        mock_Path.assert_called_with(path)
+        mock_path.write_text.assert_called_with('Line1\nLine2\n')
