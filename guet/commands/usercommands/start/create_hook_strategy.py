@@ -4,6 +4,4 @@ from guet.git.git import Git
 
 class CreateHookStrategy(HookStrategy):
     def apply(self):
-        git_path = self.git_path.replace('/hooks', '')
-        git = Git(git_path)
-        git.create_hooks()
+        self.git.create_hooks()

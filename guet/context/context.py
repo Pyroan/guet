@@ -68,7 +68,7 @@ class Context(SetCommittersObservable):
     @property
     def git(self):
         if self._git is None:
-            self._git = Git(join(self.project_root_directory, '.git'))
+            self._git = Git(self.project_root_directory.joinpath('.git'))
             self.add_set_committer_observer(self._git)
         return self._git
 
