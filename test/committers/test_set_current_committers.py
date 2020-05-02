@@ -45,7 +45,8 @@ class TestSetCurrentCommitters(unittest.TestCase):
             'initials3,initials4,1000000000000,/absolute/path/to/other/.git',
             'initials1,initials2,1000000000000,/path/to/project/.git'
         ]
-        mock_write_lines.assert_called_with(Path(join(CONFIGURATION_DIRECTORY, constants.COMMITTERS_SET)), lines)
+        mock_write_lines.assert_called_with(Path(join(CONFIGURATION_DIRECTORY, constants.COMMITTERS_SET)).absolute(),
+                                            lines)
 
     @patch('guet.committers._set_current_committers.all_committers_set')
     @patch('guet.committers._set_current_committers.write_lines')
