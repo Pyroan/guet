@@ -23,15 +23,3 @@ class TestWriteLines(unittest.TestCase):
         ]
         write_lines(path, given)
         path.write_text.assert_called_with('Line1\nLine2\n')
-
-    @patch('guet.files.write_lines.Path')
-    def test_if_given_str_path_convert_to_Path(self, mock_Path):
-        mock_path = mock_Path.return_value
-        given = [
-            'Line1',
-            'Line2\n'
-        ]
-        path = '/path/to/file'
-        write_lines(path, given)
-        mock_Path.assert_called_with(path)
-        mock_path.write_text.assert_called_with('Line1\nLine2\n')

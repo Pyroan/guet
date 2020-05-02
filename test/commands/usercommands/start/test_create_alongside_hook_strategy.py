@@ -9,6 +9,6 @@ class TestCreateAlongsideHookStrategy(TestCase):
     def test_creates_hooks_with_alongside_mode(self):
         context = Mock()
         context.git = Mock()
-        strategy = CreateAlongsideHookStrategy(context)
+        strategy = CreateAlongsideHookStrategy(context.git)
         strategy.apply()
         context.git.create_hooks.assert_called_with(alongside=True)

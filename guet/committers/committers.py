@@ -2,24 +2,23 @@ from os.path import join
 from pathlib import Path
 from typing import List, Union
 
-from guet.committers._committers_set import CommittersSet, all_committers_set
-from guet.util import current_millis
-
 from guet import constants
+from guet.committers._committers_set import all_committers_set
+from guet.committers._set_current_committers import set_current_committers
+from guet.committers.committer import Committer
 from guet.committers.global_committer import GlobalCommitter
 from guet.committers.local_committer import LocalCommitter
 from guet.config import CONFIGURATION_DIRECTORY
-from guet.committers.committer import Committer
-from guet.errors import InvalidInitialsError
-from guet.committers._set_current_committers import set_current_committers
 from guet.context.set_committer_observer import SetCommitterObserver
+from guet.errors import InvalidInitialsError
 from guet.files.read_lines import read_lines
 from guet.files.write_lines import write_lines
+from guet.util import current_millis
 
 _TWENTY_FOUR_HOURS_IN_MILLISECONDS = 86400000
 
 
-def _load_global_committers(path: str) -> List[Committer]:
+def _load_global_committers(path: Path) -> List[Committer]:
     lines = read_lines(path)
     committers = []
     for line in lines:
@@ -39,7 +38,7 @@ def _load_local_committers(path_to_project_root: Path) -> List[Committer]:
 
 
 def _write_committers(committers: List[Committer]):
-    write_lines(join(CONFIGURATION_DIRECTORY, constants.COMMITTERS), [str(committer) for committer in committers])
+    write_lines(Path(join(CONFIGURATION_DIRECTORY, constants.COMMITTERS)), [str(committer) for committer in committers])
 
 
 def _current_initials(project_root: Path) -> List[str]:

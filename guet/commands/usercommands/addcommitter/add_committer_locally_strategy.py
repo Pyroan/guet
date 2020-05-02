@@ -1,10 +1,10 @@
 from os import mkdir
-from os.path import isdir, join
+from os.path import isdir
 from pathlib import Path
 
 from guet.commands.strategies.strategy import CommandStrategy
-from guet.committers.local_committer import LocalCommitter
 from guet.committers.committers import Committers
+from guet.committers.local_committer import LocalCommitter
 
 
 class AddCommitterLocallyStrategy(CommandStrategy):

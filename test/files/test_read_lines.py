@@ -31,10 +31,3 @@ class TestReadLines(unittest.TestCase):
         path.read_text.return_value = 'Line1\nLine2\n'
         result = read_lines(path)
         self.assertEqual(['Line1', 'Line2'], result)
-
-    @patch('guet.files.read_lines.Path')
-    def test_if_given_str_path_convert_to_Path(self, mock_Path):
-        mock_Path.return_value.read_text.return_value = 'Line1\nLine2'
-        result = read_lines('/path/to/file')
-        mock_Path.assert_called_with('/path/to/file')
-        self.assertEqual(['Line1', 'Line2'], result)

@@ -18,8 +18,5 @@ def _write_lines_to_path(path: Path, lines: List[str]) -> None:
     path.write_text(text)
 
 
-def write_lines(path: Union[Path, str], lines: List[str]) -> None:
-    if type(path) is str:
-        return _write_lines_to_path(Path(path), lines)
-    else:
-        return _write_lines_to_path(path, lines)
+def write_lines(path: Path, lines: List[str]) -> None:
+    return _write_lines_to_path(path, lines)

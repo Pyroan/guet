@@ -19,8 +19,8 @@ def _format_committers_to_committers_set_format(committers: List[Committer], pro
 
 def _index_with_matching_path(current_set: List[CommittersSet],
                               formatted_set_committers_information: CommittersSet) -> Union[CommittersSet, None]:
-    for index, current_set in enumerate(current_set):
-        if current_set.path == formatted_set_committers_information.path:
+    for index, current in enumerate(current_set):
+        if current.path == formatted_set_committers_information.path:
             return index
     return -1
 
