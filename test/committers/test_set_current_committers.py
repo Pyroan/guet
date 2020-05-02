@@ -42,8 +42,8 @@ class TestSetCurrentCommitters(unittest.TestCase):
         set_current_committers([Committer('name', 'email', 'initials1'), Committer('name', 'email', 'initials2')],
                                Path('/path/to/project/.git'))
         lines = [
-            'initials3,initials4,1000000000000,/absolute/path/to/other/.git',
-            'initials1,initials2,1000000000000,/path/to/project/.git'
+            f'initials3,initials4,1000000000000,{str(Path("/absolute/path/to/other/.git"))}',
+            f'initials1,initials2,1000000000000,{str(Path("/path/to/project/.git"))}'
         ]
         mock_write_lines.assert_called_with(Path(join(CONFIGURATION_DIRECTORY, constants.COMMITTERS_SET)).absolute(),
                                             lines)
