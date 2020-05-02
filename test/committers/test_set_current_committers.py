@@ -24,8 +24,9 @@ class TestSetCurrentCommitters(unittest.TestCase):
         set_current_committers([Committer('name', 'email', 'initials1'), Committer('name', 'email', 'initials2')],
                                Path('/path/to/project/.git'))
 
+        formatted_path = str(Path('/path/to/project/.git'))
         mock_write_lines.assert_called_with(Path(join(CONFIGURATION_DIRECTORY, constants.COMMITTERS_SET)),
-                                            ['initials1,initials2,1000000000000,/path/to/project/.git'])
+                                            [f'initials1,initials2,1000000000000,{formatted_path}'])
 
     @patch('guet.committers._set_current_committers.all_committers_set')
     @patch('guet.committers._set_current_committers.write_lines')
@@ -35,7 +36,7 @@ class TestSetCurrentCommitters(unittest.TestCase):
                                                                   mock_write_lines,
                                                                   all_committers_set):
         all_committers_set.return_value = [
-            CommittersSet(['initials3', 'initials4'], 1000000000000, '/absolute/path/to/other/.git'),
+            CommittersSet(['initials3', 'initials4'], 1000000000000, Path('/absolute/path/to/other/.git')),
         ]
         mock_time.return_value = 1000000000
         set_current_committers([Committer('name', 'email', 'initials1'), Committer('name', 'email', 'initials2')],
@@ -60,7 +61,8 @@ class TestSetCurrentCommitters(unittest.TestCase):
         set_current_committers([Committer('name', 'email', 'initials3'), Committer('name', 'email', 'initials4')],
                                Path('/path/to/project/.git'))
 
+        formatted_path = str(Path('/path/to/project/.git'))
         lines = [
-            'initials3,initials4,1000000000000,/path/to/project/.git'
+            f'initials3,initials4,1000000000000,{formatted_path}'
         ]
         mock_write_lines.assert_called_with(Path(join(CONFIGURATION_DIRECTORY, constants.COMMITTERS_SET)), lines)

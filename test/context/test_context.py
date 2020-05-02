@@ -17,7 +17,7 @@ class TestContext(TestCase):
     def test_instance_only_load_project_root_if_its_used(self, mock_project_root, _1, _2):
         instance: Context = Context.instance()
         self.assertIsNone(instance._project_root_directory)
-        self.assertEqual(instance.project_root_directory, Path('/path/to/cwd'))
+        self.assertEqual(instance.project_root_directory, Path('/path/to/cwd').absolute())
 
     def test_set_committers_notifies_author_observers_that_committers_are_set(self, mock_git, mock_committers):
         context = Context(Path('current/working/directory'))
