@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import List, Union
+from typing import List
 
 
 def _append_newline_if_not_present(line: str):

@@ -43,7 +43,7 @@ def _replace_committers_set_with_matching_initials(current_committers_set: List[
 def _convert_to_text(current_set: CommittersSet) -> str:
     path = current_set.path
     current_time_in_millis = int(round(time.time() * 1000))
-    committer_initials = ','.join([initials for initials in current_set.initials])
+    committer_initials = ','.join(current_set.initials)
     return committer_initials + f',{current_time_in_millis},{path}'
 
 

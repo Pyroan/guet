@@ -160,7 +160,7 @@ class TestCommittersRemove(TestCase):
         committers = Committers()
         committer = Committer(name='name2', email='email2', initials='initials2')
         committers.remove(committer)
-        mock_write_lines.assert_called_with(join(CONFIGURATION_DIRECTORY, constants.COMMITTERS), [
+        mock_write_lines.assert_called_with(Path(join(CONFIGURATION_DIRECTORY, constants.COMMITTERS)), [
             'initials1,name1,email1',
         ])
 
